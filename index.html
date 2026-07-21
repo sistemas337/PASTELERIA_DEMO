@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dulce Gestión | Pastelería</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">DG</div>
+        <div>
+          <h1>Dulce Gestión</h1>
+          <p>Panel de pastelería</p>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Inicio</button>
+        <button class="nav-item" data-view="pedidos"><span>🧾</span> Pedidos</button>
+        <button class="nav-item" data-view="productos"><span>🎂</span> Productos</button>
+        <button class="nav-item" data-view="clientes"><span>👥</span> Clientes</button>
+        <button class="nav-item" data-view="inventario"><span>📦</span> Inventario</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
+        <div>
+          <strong>Sistema activo</strong>
+          <small>Datos guardados en este navegador</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Administración</p>
+          <h2 id="page-title">Resumen general</h2>
+        </div>
+        <div class="top-actions">
+          <div class="date-badge" id="today"></div>
+          <button class="btn btn-primary" id="new-order-top">+ Nuevo pedido</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active">
+        <div class="hero">
+          <div>
+            <span class="hero-label">Tu negocio, más ordenado</span>
+            <h3>Controla pedidos, entregas e inventario desde un solo lugar.</h3>
+            <p>Este demo simula la operación diaria de una pastelería y guarda los cambios localmente.</p>
+          </div>
+          <button class="btn btn-light" id="hero-new-order">Registrar pedido</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Ventas del día</span>
+            <strong id="sales-today">$0</strong>
+            <small>Pedidos entregados hoy</small>
+          </article>
+          <article class="stat-card">
+            <span>Pedidos pendientes</span>
+            <strong id="pending-count">0</strong>
+            <small>Por preparar o entregar</small>
+          </article>
+          <article class="stat-card">
+            <span>Entregas próximas</span>
+            <strong id="upcoming-count">0</strong>
+            <small>En los siguientes 3 días</small>
+          </article>
+          <article class="stat-card">
+            <span>Productos activos</span>
+            <strong id="product-count">0</strong>
+            <small>Disponibles para venta</small>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Operación</p>
+                <h3>Pedidos recientes</h3>
+              </div>
+              <button class="text-btn" data-go="pedidos">Ver todos</button>
+            </div>
+            <div id="recent-orders"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Inventario</p>
+                <h3>Alertas de existencias</h3>
+              </div>
+              <button class="text-btn" data-go="inventario">Revisar</button>
+            </div>
+            <div id="inventory-alerts"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="pedidos" class="view">
+        <div class="section-toolbar">
+          <div class="search-box">
+            <input id="order-search" type="search" placeholder="Buscar por cliente, folio o producto..." />
+          </div>
+          <select id="order-filter">
+            <option value="Todos">Todos los estados</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En preparación">En preparación</option>
+            <option value="Listo">Listo</option>
+            <option value="Entregado">Entregado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+          <button class="btn btn-primary" id="new-order">+ Nuevo pedido</button>
+        </div>
+        <article class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Folio</th>
+                  <th>Cliente</th>
+                  <th>Producto</th>
+                  <th>Entrega</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="productos" class="view">
+        <div class="section-toolbar">
+          <div>
+            <p class="muted">Catálogo de pasteles y postres disponibles.</p>
+          </div>
+          <button class="btn btn-primary" id="new-product">+ Nuevo producto</button>
+        </div>
+        <div id="products-grid" class="products-grid"></div>
+      </section>
+
+      <section id="clientes" class="view">
+        <div class="section-toolbar">
+          <div class="search-box">
+            <input id="client-search" type="search" placeholder="Buscar cliente..." />
+          </div>
+          <button class="btn btn-primary" id="new-client">+ Nuevo cliente</button>
+        </div>
+        <article class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Teléfono</th>
+                  <th>Correo</th>
+                  <th>Pedidos</th>
+                  <th>Total comprado</th>
+                </tr>
+              </thead>
+              <tbody id="clients-table"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="inventario" class="view">
+        <div class="section-toolbar">
+          <div>
+            <p class="muted">Control básico de materias primas.</p>
+          </div>
+          <button class="btn btn-primary" id="new-inventory">+ Agregar insumo</button>
+        </div>
+        <div id="inventory-grid" class="inventory-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="order-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" data-close="order-modal">×</button>
+      <p class="eyebrow">Registro</p>
+      <h3 id="order-modal-title">Nuevo pedido</h3>
+      <form id="order-form">
+        <input type="hidden" id="order-id" />
+        <div class="form-grid">
+          <label>Cliente
+            <input id="order-client" required placeholder="Nombre del cliente" />
+          </label>
+          <label>Teléfono
+            <input id="order-phone" required placeholder="55 0000 0000" />
+          </label>
+          <label>Producto
+            <select id="order-product" required></select>
+          </label>
+          <label>Fecha de entrega
+            <input id="order-date" type="date" required />
+          </label>
+          <label>Anticipo
+            <input id="order-deposit" type="number" min="0" value="0" />
+          </label>
+          <label>Estado
+            <select id="order-status">
+              <option>Pendiente</option>
+              <option>En preparación</option>
+              <option>Listo</option>
+              <option>Entregado</option>
+              <option>Cancelado</option>
+            </select>
+          </label>
+          <label class="full">Indicaciones
+            <textarea id="order-notes" rows="3" placeholder="Sabor, mensaje, decoración, colores..."></textarea>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" data-close="order-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="simple-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" data-close="simple-modal">×</button>
+      <p class="eyebrow" id="simple-eyebrow">Registro</p>
+      <h3 id="simple-title">Nuevo registro</h3>
+      <form id="simple-form">
+        <div id="simple-fields" class="form-grid"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" data-close="simple-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
